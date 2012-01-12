@@ -1,0 +1,11 @@
+Narwhal is a project of the Illini 4000. illini4000.org 
+
+This repo is the /app folder of a CakePHP app.
+
+You will need CakePHP 1.3, Apache, MySQL, some gumption, and Narwhal food to run it. For more info on making this stack play nicely: http://book.cakephp.org/1.3/en/view/1528/Blog.
+
+Further, copy core.php.copy and database.php.copy to core.php and database.php, respectively in /config. 
+
+Next, fill in the cipher seed and security salt in core.php and database connection values in database.php with your own values. (core.php and database.php have been .gitignore'd for security reasons)
+
+Happy Narwhal Tracking!
