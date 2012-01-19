@@ -1,100 +1,11 @@
+<?php echo $this->Html->css("tablesorter-theme/style.css"); ?>
+<?php echo $this->Html->script('jquery.tablesorter.min.js'); ?>
+<?php echo $this->Html->script('views/rider_summaries/index.js'); ?>
 <script type="text/javascript" language="javascript">
     var thisUrl = "<?php echo $this->Html->url(array("controller" => "rider_summaries", "action" => "index")); ?>";
     var thisYear = <?php echo $currentYear; ?>;
-    
     var showProgressBars = <?php echo isset($target) ? "true" : "false" ?>;
-    
-	$(document).ready(function() {
-        $("#nav_rider").addClass("selected");
-        
-		if($("#riderSummary tfoot").length > 0) {
-			$("#fundraisingSummary").hide();
-		} else {
-			var total = 0.0;
-			var donations = $("#riderSummary tbody tr");
-			var count = donations.size();
-			for(var i = 0; i < count; i++) {
-				total += parseFloat(donations.eq(i).find("td.total").eq(0).text().replace("$", ""));
-			}
-			$("#fundraisingTotal").text(total);
-			$("#fundraisingAverage").text(Math.round(total / count));
-		}
-        
-        var yearSelector = $("#year")
-            .val(thisYear)
-            .change(function() {
-                var selected = $(this).val();
-                if(selected != thisYear) {
-                    window.location = thisUrl + "&year=" + $(this).val();
-                }
-            })
-            .hide();
-        
-        $("#changeYear").click(function() {
-            yearSelector.toggle();
-            $(this).toggle();
-        });
-        
-        if(showProgressBars) {
-            var progressBars = new ProgressBars();
-            
-            $("#showProgressBars").click(function() {
-                progressBars.toggle();
-            })
-        }
-	});
-    
-    function ProgressBars() {
-        var toggleButton = $("#showProgressBars");
-        
-        var targetAmt = <?php echo isset($target['Rules']['rule_amt']) ? $target['Rules']['rule_amt'] : 0; ?>;
-        
-        var table = $("#riderSummary");
-        
-        var initialized = false, hidden = true;
-        
-        function initialize() {
-            table.find("tbody tr").each(function() {
-                var row = $(this);
-                var amt = parseInt(row.find("td.amt").text().replace("$",""));
-                if(amt > targetAmt) {
-                    amt = targetAmt;
-                }
-                var points = (amt / targetAmt) * 100;
-                row.find("div.progressBar").progressbar({ value: points});
-            });
-            initialized = true;
-        }
-        
-        function toggle() {
-            if(hidden) {
-                show();
-            } else {
-                hide();
-            }
-        }
-        
-        function show() {
-            if(!initialized) {
-                initialize();
-            }
-            table.find("td, th").hide();
-            table.find("td.progress-bar, th.progress-bar").show();
-            toggleButton.text("Hide Progress");
-            hidden = false;
-        }
-        
-        function hide() {
-            table.find("td, th").show();
-            table.find("td.progress-bar-cell, th.progress-bar-header").hide();
-            toggleButton.text("Show Progress");
-            hidden = true;
-        }
-        
-        this.toggle = toggle;
-        this.show = show;
-        this.hide = hide;
-    }
+    var targetAmt = <?php echo isset($target['Rules']['rule_amt']) ? $target['Rules']['rule_amt'] : 0; ?>;
 </script>
 <style type="text/css">
     .amt {
@@ -130,7 +41,7 @@
     - <a id='showProgressBars' href='#'>See Progress</a>
 <?php } ?>
 </h2>
-<table id="riderSummary">
+<table id="riderSummary" class="tablesorter">
 	<thead>
 		<tr>
 			<th class='progress-bar'>First Name</th>
@@ -153,7 +64,8 @@
             <?php if($rider['RiderSummary']['don_total'] == null) {
                     echo '0.00';
                 } else {
-                    echo $rider['RiderSummary']['don_total']; 
+                    echo $rider['RiderSummary']['don_total'];
+                    echo "<input type='hidden' value='" . $rider['RiderSummary']['don_total'] * 100 ."' class='amt-cents'/>"; 
                 }
             ?>
 			</td>
@@ -196,7 +108,7 @@
 	<?php if(count($riders) == 0) { ?>
 	<tfoot>
 		<tr>
-			<td colspan='5'>
+			<td colspan='6'>
 				There are no riders for this year.
 				<?php echo $this->Html->link('Add One!', array('controller' => 'riders', 'action' => 'add')); ?>
 			</td>
