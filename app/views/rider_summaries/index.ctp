@@ -27,7 +27,7 @@
 	</div>
 	<div style="float: left; margin: 0 3px;">
 		<p style="margin: 5px 0">Average per rider</p>
-		<h2 style="margin-top: 0;">$<span id="fundraisingAverage"></span></h2>
+		<h2 style="margin-top: 0;">$<span id="fundraisingAverage">0</span></h2>
 	</div>
 </div>
 <h2>
@@ -65,18 +65,25 @@
                     echo '0.00';
                 } else {
                     echo $rider['RiderSummary']['don_total'];
-                    echo "<input type='hidden' value='" . $rider['RiderSummary']['don_total'] * 100 ."' class='amt-cents'/>"; 
+                    
+                    $general_donations = "";
+                    if($rider['RiderSummary']['r_last_name'] == $currentYear) {
+                        $general_donations = "-general";
+                    }
+                    echo "<input type='hidden' value='" . $rider['RiderSummary']['don_total'] * 100 ."' class='amt-cents" . $general_donations . "'/>"; 
                 }
             ?>
 			</td>
         <?php if(isset($target)) { ?>
-            <td class="amt">$
+            <td class="amt">
             <?php if($rider['RiderSummary']['don_total'] == null) {
-                    echo $target['Rules']['rule_amt'];
+                    echo "$ " . $target['Rules']['rule_amt'];
+                } else if($rider['RiderSummary']['r_last_name'] == $currentYear) {
+                    echo "";
                 } else if($rider['RiderSummary']['don_total'] >= $target['Rules']['rule_amt']) {
-                    echo "0.00";
+                    echo "$ 0.00";
                 } else {
-                    echo number_format($target['Rules']['rule_amt'] - $rider['RiderSummary']['don_total'],2,'.','');
+                    echo "$ " . number_format($target['Rules']['rule_amt'] - $rider['RiderSummary']['don_total'],2,'.','');
                 }
             ?>
             </td>

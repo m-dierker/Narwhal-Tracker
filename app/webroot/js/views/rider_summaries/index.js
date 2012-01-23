@@ -4,20 +4,31 @@ $(document).ready(function() {
     if($("#riderSummary tfoot").length > 0) {
         $("#fundraisingSummary").hide();
     } else {
-        var total = 0.0;
-        var donations = $("input.amt-cents");
+        var total = 0.0,
+            donations = $("input.amt-cents"),
+            general = $("input.amt-cents-general");
+        
         var count = donations.size();
         donations.each(function() {
            total += parseInt($(this).val()) / 100;
         });
+        
+        if(count > 0) {
+            $("#fundraisingAverage").text(Math.round(total / count));
+        }
+        
+        if(general.length > 0) {
+            total += parseInt(general.val()) / 100;
+        }
+        
         $("#fundraisingTotal").text(total);
-        $("#fundraisingAverage").text(Math.round(total / count));
         
         $("#riderSummary").tablesorter({
             headers: {
                 5: { sorter: false },
                 6: { sorter: false }
-            }
+            },
+            sortList: [[1,0]]
         });
     }
 
@@ -55,7 +66,7 @@ function ProgressBars() {
     function initialize() {
         table.find("tbody tr").each(function() {
             var row = $(this);
-            var amt = parseInt(row.find("input.amt-cents").val()) / 100;
+            var amt = parseInt(row.find("input.amt-cents, input.amt-cents-general").val()) / 100;
             if(amt > targetAmt) {
                 amt = targetAmt;
             }

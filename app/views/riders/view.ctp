@@ -1,20 +1,11 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#nav_rider").addClass("selected");
-        
-		if($("div.no-donations").length > 0) {
-			$("#fundraisingSummary").hide();
-		} else {
-			var total = 0.0;
-			var donations = $("td.amt");
-			var count = donations.size();
-			for(var i = 0; i < count; i++) {
-				total += parseFloat(donations.eq(i).text().replace("$", ""));
-			}
-			$("#fundraisingTotal").text(total);
-		}
-    });
-</script>
+<?php echo $this->Html->css("tablesorter-theme/style.css"); ?>
+<?php echo $this->Html->script('jquery.tablesorter.min.js'); ?>
+<?php echo $this->Html->script('views/riders/view.js'); ?>
+<style type="text/css">
+    .amt {
+        text-align: right;
+    }
+</style>
 <ul class='actions'>
 	<li>
         <?php echo $this->Html->link('Edit rider information', array('controller' => 'riders', 'action' => 'edit', $rider['Rider']['r_id'])) ?>
@@ -26,6 +17,9 @@
             null,
             '?' => array('rider' => $rider['Rider']['r_id'])
         )) ?>
+    </li>
+    <li>
+        <?php echo $this->Html->link("Delete this rider", array('action' => 'delete', $rider['Rider']['r_id'])) ?>
     </li>
 </ul>
 <div id="fundraisingSummary" style="position: absolute; right: 8px; top: 8px; text-align: right;">
@@ -39,7 +33,7 @@
     <?php echo $rider['Rider']['r_first_name'] . " " . $rider['Rider']['r_last_name'] . " (" . $rider['Rider']['r_year'] . ")" ; ?>
 </h2>
 <?php if(count($rider['DonationDonor']) > 0) { ?>
-	<table>
+	<table id="riderSummary" class="tablesorter">
 		<thead>
 			<tr>
 				<th>Donor</th>
@@ -66,8 +60,9 @@
                         'action' => 'view',
                         $donor['don_id']
                     )) ?>
+                    <?echo "<input type='hidden' value='" . $donor['don_amt'] * 100 ."' class='amt-cents'/>"; ?>
 				</td>
-				<td style="width: 40%;"><?php echo $donor['don_comment'] ?></td>
+				<td><?php echo $donor['don_comment'] ?></td>
 			</tr>
 		<?php endforeach;?>
 		</tbody>

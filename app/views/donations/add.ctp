@@ -3,7 +3,7 @@
         $("#nav_donations").addClass("selected");
     });
 </script>
-<?php echo $this->Html->script('views/donations.js'); ?>
+<?php echo $this->Html->script('views/donations/donations.js'); ?>
 <?php echo $this->Form->create('Donation', array('action' => 'add')); ?>
 	<fieldset>
 		<legend>Log a Donation</legend>

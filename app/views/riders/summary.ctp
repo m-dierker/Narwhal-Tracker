@@ -1,36 +1,27 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#nav_rider").addClass("selected");
-        
-        $("div.fundraisingSummary").each(function(i, el) {
-			var total = 0.0;
-			var donations = $("#fundraisingTable" + i).find("tbody tr");
-			var count = donations.size();
-			for(var j = 0; j < count; j++) {
-				total += parseFloat(donations.eq(j).find("td.amt").text().replace("$", ""));
-			}
-			$("#fundraisingTotal" + i).text(total);
-        })
-        
-    });
-</script>
+<?php echo $this->Html->css("tablesorter-theme/style.css"); ?>
+<?php echo $this->Html->script('jquery.tablesorter.min.js'); ?>
+<?php echo $this->Html->script('views/riders/summary.js'); ?>
 <h2>
     <?php echo $riders[0]['Rider']['r_first_name'] . " " . $riders[0]['Rider']['r_last_name']; ?>
 </h2>
 <?php $i = 0; ?>
 <?php foreach($riders as $rider): ?>
-<div style="position: relative;">
-    <div class="fundraisingSummary" id="fundraisingSummary<?php echo $i ?>" style="position: absolute; right: 8px; top: 8px; text-align: right;">
+<div style="position: relative;" class="riderYearSummary" style="clear: both;">
+    <div class="fundraisingSummary" id="fundraisingSummary<?php echo $i ?>" style="float: right; right: 8px; top: 8px; text-align: right;">
         <div style="float: left; margin: 0 3px;">
-            <p style="margin: 5px 0;">Total <?php echo $rider['Rider']['r_year'] ?> fundraising:</p>
-            <h2 style="margin-top: 0;">$<span class="fundraisingTotal"  id="fundraisingTotal<?php echo $i ?>"></span></h2>
+            <p style="margin: 5px 0;">Total personal fundraising:</p>
+            <h2 style="margin-top: 0;">$<span class="fundraisingTotal" id="fundraisingTotal<?php echo $i ?>"></span></h2>
+        </div>
+        <div style="float: left; margin: 0 3px;">
+            <p style="margin: 5px 0;">Total team fundraising:</p>
+            <h2 style="margin-top: 0;">$<?php echo $team_totals[$rider['Rider']['r_year']] ?></h2>
         </div>
     </div>
     <h3>
         <?php echo $rider['Rider']['r_year'] ?> Activity:
     </h3>
     <?php if(count($rider['DonationDonor']) > 0) { ?>
-        <table id="fundraisingTable<?php echo $i ?>">
+        <table id="fundraisingTable<?php echo $i ?>" class="fundraisingTable tablesorter" style="clear: both;">
             <thead>
                 <tr>
                     <th>Donor</th>
@@ -54,6 +45,7 @@
                     </td>
                     <td class="amt">
                         <?php echo "$" . $donor['don_amt'] ?>
+                        <?php echo "<input type='hidden' value='" . $donor['don_amt'] * 100 ."' class='amt-cents'/>" ?>
                     </td>
                     <td style="width: 40%;"><?php echo $donor['don_comment'] ?></td>
                 </tr>
