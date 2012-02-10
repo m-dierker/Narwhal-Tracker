@@ -112,7 +112,7 @@ class UsersController extends AppController {
     }
     
     ##helper function to codify permissions
-    
+    /*
     function initDB() {
         $group =& $this->User->Group;
         
@@ -188,7 +188,7 @@ class UsersController extends AppController {
         
         exit;
     }
-    /*
+    
     ##helper function for creating ACLs
     
     
