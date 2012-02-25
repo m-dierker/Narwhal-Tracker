@@ -1,8 +1,5 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#nav_donor").addClass("selected");
-    });
-</script>
+<?php $this->Html->scriptBlock("$(document).ready(function() { $('#nav_donor').addClass('active'); });", array('inline' => false)); ?>
+
 <?php echo $this->Form->create('Donor'); ?>
 	<fieldset>
 		<legend>Add a Donor</legend>
@@ -29,7 +26,7 @@
 		?>
 	</fieldset>
 	<div class='submit'>
-		<input type='submit' value='Create Donor' />
+		<input type='submit' value='Create Donor' class="btn" />
         <?php echo $this->Html->link('Cancel', array(
             'controller' => 'donors',
             'action' => 'index'

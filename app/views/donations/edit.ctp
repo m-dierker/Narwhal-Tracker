@@ -1,8 +1,5 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#nav_donations").addClass("selected");
-    });
-</script>
+<?php $this->Html->scriptBlock("$(document).ready(function() { $('#nav_donations').addClass('active'); });", array('inline' => false)); ?>
+
 <?php echo $this->Html->script('views/donations.js'); ?>
 <?php echo $this->Form->create('Donation', array('action' => 'add')); ?>
 	<fieldset>

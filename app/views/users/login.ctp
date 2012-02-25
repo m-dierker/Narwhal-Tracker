@@ -6,10 +6,11 @@
 		'username',
 		'password'
 	));
-	echo $this->Form->end('Login');
 ?>
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-		$("#nav_login").addClass('selected');
-	});
-</script>
+<div class='submit'>
+    <button type='submit' class="btn">Login</button>
+</div>
+<?php    
+	echo $this->Form->end();
+    echo $this->Html->scriptBlock('$(document).ready(function() { $("#nav_login").addClass("active"); });', array('inline' => false));
+?>

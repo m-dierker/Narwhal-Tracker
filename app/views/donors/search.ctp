@@ -1,9 +1,6 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#nav_donor").addClass("selected");
-    });
-</script>
-<ul class='actions'>
+<?php $this->Html->scriptBlock("$(document).ready(function() { $('#nav_donor').addClass('active'); });", array('inline' => false)); ?>
+
+<ul class='nav nav-pills'>
     <li>
         <?php echo $this->Html->link('See all donors', array(
             'controller' => 'donors',
@@ -37,10 +34,17 @@
             ));
         ?>
     </fieldset>
-<?php echo $this->Form->end(__('Search', true));?>
+	<div class='submit'>
+		<input type='submit' value='Search' class="btn" />
+        <?php echo $this->Html->link('Cancel', array(
+            'controller' => 'donors',
+            'action' => 'index'
+        )) ?>
+	</div>
+<?php echo $this->Form->end();?>
 <?php if(isset($results)) { ?>
 <h3><?php echo count($results) . " donors found" ?></h3>
-<table>
+<table class='table table-striped'>
 	<thead>
 		<tr>
 			<th>Name</th>

@@ -1,9 +1,6 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#nav_donations").addClass("selected");
-    });
-</script>
-<ul class="actions">
+<?php $this->Html->scriptBlock("$(document).ready(function() { $('#nav_donations').addClass('active'); });", array('inline' => false)); ?>
+
+<ul class="nav nav-pills">
     <li>
         <?php echo $this->Html->link('Export to csv', array(
                 'controller' => 'donations',
@@ -22,7 +19,7 @@
 </ul>
 <h2>Receipt Management</h2>
 <h3>The following donations need to be receipted:</h3>
-<table>
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Id</th>
@@ -59,11 +56,11 @@
 		</tr>
 	<?php endforeach; ?>
 	</tbody>
-    <?php if(count($donations) == 0) { ?>
+<?php if(count($donations) == 0) { ?>
     <tfoot>
         <tr>
             <td colspan="7">All donations have been receipted!</td>
         </tr>
     </tfoot>
-    <?php } ?>
+<?php } ?>
 </table>

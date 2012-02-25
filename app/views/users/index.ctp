@@ -1,9 +1,9 @@
-<ul class="actions">
+<ul class="nav nav-pills">
     <li><?php echo $this->Html->link(__('Add User', true), array('action' => 'add')); ?></li>
 </ul>
 <div class="users index">
 	<h2><?php __('Users');?></h2>
-	<table cellpadding="0" cellspacing="0">
+	<table cellpadding="0" cellspacing="0" class="table table-striped">
 	<tr>
         <th><?php echo $this->Paginator->sort('id');?></th>
         <th><?php echo $this->Paginator->sort('username');?></th>

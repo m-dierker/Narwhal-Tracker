@@ -1,9 +1,6 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#nav_donations").addClass("selected");
-    });
-</script>
-<ul class='actions'>
+<?php $this->Html->scriptBlock("$(document).ready(function() { $('#nav_donations').addClass('active'); });", array('inline' => false)); ?>
+
+<ul class='nav nav-pills'>
     <li>
         <?php echo $this->Html->link('Add a donation', array(
             'controller' => 'donations',
@@ -18,7 +15,7 @@
     </li>
 </ul>
 <h2>Donations</h2>
-<table>
+<!--<table>
 	<thead>
 		<tr>
 			<th>Id</th>
@@ -47,4 +44,4 @@
 		</tr>
 	<?php endforeach; ?>
 	</tbody>
-</table>
+</table>-->

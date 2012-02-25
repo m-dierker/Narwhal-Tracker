@@ -1,6 +1,5 @@
 /* tables */
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-	border: 1px solid #353535;
 	padding: 4px;
     padding-right: 21px !important;
     color: #000;
@@ -24,6 +23,5 @@ table.tablesorter thead tr .headerSortDown {
 }
 table.tablesorter thead tr .headerSortDown,
 table.tablesorter thead tr .headerSortUp {
-	border: 1px solid #167EDF;
     color: #167EDF;
 }

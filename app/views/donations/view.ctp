@@ -1,8 +1,5 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#nav_donations").addClass("selected");
-    });
-</script>
+<?php $this->Html->scriptBlock("$(document).ready(function() { $('#nav_donations').addClass('active'); });", array('inline' => false)); ?>
+
 <ul class='actions'>
     <li>
         <?php echo $this->Html->link('Add another donation', array(

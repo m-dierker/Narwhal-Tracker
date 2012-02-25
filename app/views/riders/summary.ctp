@@ -1,27 +1,30 @@
 <?php echo $this->Html->css("tablesorter-theme/style.css"); ?>
-<?php echo $this->Html->script('jquery.tablesorter.min.js'); ?>
-<?php echo $this->Html->script('views/riders/summary.js'); ?>
+<?php echo $this->Html->script(
+        array('views/riders/summary.js', 'jquery.tablesorter.min.js'), 
+        array('inline' => false)
+    );
+?>
 <h2>
     <?php echo $riders[0]['Rider']['r_first_name'] . " " . $riders[0]['Rider']['r_last_name']; ?>
 </h2>
 <?php $i = 0; ?>
 <?php foreach($riders as $rider): ?>
-<div style="position: relative;" class="riderYearSummary" style="clear: both;">
-    <div class="fundraisingSummary" id="fundraisingSummary<?php echo $i ?>" style="float: right; right: 8px; top: 8px; text-align: right;">
-        <div style="float: left; margin: 0 3px;">
+<div class="riderYearSummary">
+    <div class="row" id="fundraisingSummary<?php echo $i ?>">
+        <h3 class="span6">
+            <?php echo $rider['Rider']['r_year'] ?> Activity:
+        </h3>
+        <div class="span2 offset2">
             <p style="margin: 5px 0;">Total personal fundraising:</p>
             <h2 style="margin-top: 0;">$<span class="fundraisingTotal" id="fundraisingTotal<?php echo $i ?>"></span></h2>
         </div>
-        <div style="float: left; margin: 0 3px;">
+        <div class="span2">
             <p style="margin: 5px 0;">Total team fundraising:</p>
             <h2 style="margin-top: 0;">$<?php echo $team_totals[$rider['Rider']['r_year']] ?></h2>
         </div>
     </div>
-    <h3>
-        <?php echo $rider['Rider']['r_year'] ?> Activity:
-    </h3>
     <?php if(count($rider['DonationDonor']) > 0) { ?>
-        <table id="fundraisingTable<?php echo $i ?>" class="fundraisingTable tablesorter" style="clear: both;">
+        <table id="fundraisingTable<?php echo $i ?>" class="fundraisingTable tablesorter table table-striped" style="clear: both;">
             <thead>
                 <tr>
                     <th>Donor</th>

@@ -1,39 +1,42 @@
 <?php echo $this->Html->css("tablesorter-theme/style.css"); ?>
-<?php echo $this->Html->script('jquery.tablesorter.min.js'); ?>
-<?php echo $this->Html->script('views/riders/view.js'); ?>
+<?php echo $this->Html->script(
+        array('jquery.tablesorter.min.js', 'views/riders/view.js'),
+        array('inline' => false)
+    );
+?>
 <style type="text/css">
     .amt {
         text-align: right;
     }
 </style>
-<ul class='actions'>
-	<li>
-        <?php echo $this->Html->link('Edit rider information', array('controller' => 'riders', 'action' => 'edit', $rider['Rider']['r_id'])) ?>
-    </li>
-	<li>
-        <?php echo $this->Html->link('Log a donation for ' . $rider['Rider']['r_first_name'], array(
-            'controller' => 'donations',
-            'action' => 'add',
-            null,
-            '?' => array('rider' => $rider['Rider']['r_id'])
-        )) ?>
-    </li>
-    <li>
-        <?php echo $this->Html->link("Delete this rider", array('action' => 'delete', $rider['Rider']['r_id'])) ?>
-    </li>
-</ul>
-<div id="fundraisingSummary" style="position: absolute; right: 8px; top: 8px; text-align: right;">
-	<div style="float: left; margin: 0 3px;">
-		<p style="margin: 5px 0;">Total fundraising:</p>
-		<h2 style="margin-top: 0;">$<span id="fundraisingTotal"></span></h2>
-	</div>
+<div class="row">
+    <ul class='nav nav-pills span6'>
+        <li>
+            <?php echo $this->Html->link('Edit rider information', array('controller' => 'riders', 'action' => 'edit', $rider['Rider']['r_id'])) ?>
+        </li>
+        <li>
+            <?php echo $this->Html->link('Log a donation for ' . $rider['Rider']['r_first_name'], array(
+                'controller' => 'donations',
+                'action' => 'add',
+                null,
+                '?' => array('rider' => $rider['Rider']['r_id'])
+            )) ?>
+        </li>
+        <li>
+            <?php echo $this->Html->link("Delete this rider", array('action' => 'delete', $rider['Rider']['r_id'])) ?>
+        </li>
+    </ul>
+    <div id="fundraisingSummary" class="span2 offset4">
+        <p style="margin: 5px 0;">Total fundraising:</p>
+        <h2 style="margin-top: 0;">$<span id="fundraisingTotal"></span></h2>
+    </div>
 </div>
 <h2>
     Rider summary - 
     <?php echo $rider['Rider']['r_first_name'] . " " . $rider['Rider']['r_last_name'] . " (" . $rider['Rider']['r_year'] . ")" ; ?>
 </h2>
 <?php if(count($rider['DonationDonor']) > 0) { ?>
-	<table id="riderSummary" class="tablesorter">
+	<table id="riderSummary" class="tablesorter table table-striped">
 		<thead>
 			<tr>
 				<th>Donor</th>

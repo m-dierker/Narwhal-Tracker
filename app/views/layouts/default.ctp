@@ -22,63 +22,70 @@
 	<head>
 		<?php echo $this->Html->charset(); ?>
 		<title>
-			Narwhal Tracker: 
-			<?php echo $title_for_layout; ?>
+			Narwhal Tracker: <?php echo $title_for_layout; ?>
 		</title>
 		<?php
 			echo $this->Html->meta('icon');
-			//echo $this->Html->css('cake.generic');
-			echo $this->Html->css('generic');
-            echo $this->Html->css('dot-luv/jquery-ui-1.8.16.custom');
-			echo $this->Html->script('jquery-1.6.2.min');
-			echo $this->Html->script('jquery-ui-1.8.16.custom.min');
-			echo $scripts_for_layout;
+			echo $this->Html->css('bootstrap.min');
+			echo $this->Html->css('jquery-bootstrap/jquery-ui-1.8.16.custom.css');
 		?>
 	</head>
 	<body>
-		<div id="container" class="internal">
+		<div class="navbar">
         <?php if($this->Session->check('Auth.User')) { ?>    
-			<div id="header">
-				<h1>Narwhal Tracker</h1>
-                <div id="userThingy">
-                    <?php echo $this->Session->read('Auth.User.username'); ?>!
-                    <ul class="actions">
-                        <li>
-                            <?php echo $this->Html->link('Change password', array('controller' => 'users', 'action' => 'password')); ?>
-                        </li>
-                    </ul>
+			<div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">Narwhal Tracker</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li id="nav_rider">
+                                <?php echo $this->Html->link('Riders', array('controller' => 'riders', 'action' => 'index')); ?>
+                            </li>
+                            <li id="nav_donor">
+                                <?php echo $this->Html->link('Donors', array('controller' => 'donors', 'action' => 'index')); ?>
+                            </li>
+                            <li id="nav_donations">
+                                <?php echo $this->Html->link('Donations', array('controller' => 'donations', 'action' => 'index')); ?>
+                            </li>
+                            <li id="nav_settings">
+                                <?php echo $this->Html->link('Settings', array('controller' => 'app_settings', 'action' => 'index')); ?>
+                            </li>
+                        </ul>
+                        <ul class="nav pull-right">
+                            <li class="dropdown" id="nav_meta">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Manage my Account">
+                                    Hello, <?php echo $this->Session->read('Auth.User.username'); ?>
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <?php echo $this->Html->link('Change password', array('controller' => 'users', 'action' => 'password')); ?>
+                                    </li>
+                                    <li id="nav_logout">
+                                        <?php echo $this->Html->link('Logout', array('controller' => 'users', 'action' => 'logout')); ?>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 			</div>
-			<ul id="nav">
-				<li id="nav_rider">
-					<?php echo $this->Html->link('Riders', array('controller' => 'riders', 'action' => 'index')); ?>
-				</li>
-				<li id="nav_donor">
-					<?php echo $this->Html->link('Donors', array('controller' => 'donors', 'action' => 'index')); ?>
-				</li>
-				<li id="nav_donations">
-					<?php echo $this->Html->link('Donations', array('controller' => 'donations', 'action' => 'index')); ?>
-				</li>
-				<li id="nav_settings">
-					<?php echo $this->Html->link('Settings', array('controller' => 'app_settings', 'action' => 'index')); ?>
-				</li>
-				<li id="nav_logout">
-					<?php echo $this->Html->link('Logout', array('controller' => 'users', 'action' => 'logout')); ?>
-				</li>
-			</ul>
-        <?php } ?>  
-			<div id="content" style="position: relative; overflow: auto;">
-				<?php echo $this->Session->flash(); ?>
-				<?php echo $content_for_layout; ?>
-			</div>
-			<div id="footer">
-				<?php echo $this->Html->link(
-						$this->Html->image('cake.power.gif', array('alt'=> __('CakePHP: the rapid development php framework', true), 'border' => '0')),
-						'http://www.cakephp.org/',
-						array('target' => '_blank', 'escape' => false)
-					);
-				?>
-			</div>
-		</div>
+        <?php } ?>
+        </div>
+        <div class="container">
+            <?php echo $this->Session->flash(); ?>
+            <?php echo $content_for_layout; ?>
+        </div>
+        <?php
+			echo $this->Html->script('jquery-1.7.1.min');
+            echo $this->Html->script("bootstrap.min.js");
+			echo $this->Html->script('jquery-ui-1.8.16.custom.min');
+            echo $scripts_for_layout;
+        ?>
 	</body>
 </html>

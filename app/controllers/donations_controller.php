@@ -10,7 +10,7 @@
         }
         
 		function index() {
-			$this->set('donations', $this->Donation->find('all'));
+			//$this->set('donations', $this->Donation->find('all'));
 		}
 		
 		function view($id) {

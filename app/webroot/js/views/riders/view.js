@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#nav_rider").addClass("selected");
+    $("#nav_rider").addClass("active");
 
     if($("div.no_donations").length > 0) {
         $("#fundraisingSummary").hide();

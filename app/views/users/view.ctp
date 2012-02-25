@@ -1,4 +1,4 @@
-<ul class="actions">
+<ul class="nav nav-pills">
     <li><?php echo $this->Html->link(__('Edit User', true), array('action' => 'edit', $user['User']['id'])); ?> </li>
     <li><?php echo $this->Html->link(__('Delete User', true), array('action' => 'delete', $user['User']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $user['User']['id'])); ?> </li>
     <li><?php echo $this->Html->link(__('List Users', true), array('action' => 'index')); ?> </li>

@@ -1,29 +1,17 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#UserPassword")
-            .passStrength({
-                userid: "#UserUsername"
-            })
-            .css("float", "left");
-        
-        $("span.testresult").css("float", "left");
-        
-
-        $("#saveUser").click(function() {
-            if($(".shortPass, .badPass").length > 0) {
-                alert("Please use a stronger password.");
-                return false;
-            }
-            return true;
-        })
-    });
-</script>
 <style type="text/css">
-    .testresult {
+    .testresult, .matchresult, .currentresult {
         float: left;
         display: block;
         margin: 3px;
         font-weight: bold;
+    }
+    
+    div.input input {
+        float: left;
+    }
+    
+    div.input {
+        clear: both;
     }
     
     .shortPass
@@ -46,7 +34,7 @@
         color: #6c0;
     }
 </style>
-<?php echo $this->Html->script('password_strength_plugin.min.js'); ?>
+<?php echo $this->Html->script(array('password_strength_plugin.min.js', 'views/users/add.js'), array('inline' => false)); ?>
 <div class="users form">
 <?php echo $this->Form->create('User');?>
 	<fieldset>
@@ -54,12 +42,14 @@
 	<?php
 		echo $this->Form->input('username');
 		echo $this->Form->input('password');
+        echo "<div style='clear:both;'>";
         echo $this->Form->label('group_id');
 		echo $this->Form->select('group_id', array('options' => $groups));
+        echo "</div>";
 	?>
 	</fieldset>
     <div class='submit'>
-		<button type='submit' id="saveUser">Save User</button>
+		<button type='submit' id="saveUser" class='btn'>Save User</button>
         <?php echo $this->Html->link('Cancel', array(
             'controller' => 'users',
             'action' => 'index'

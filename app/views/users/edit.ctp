@@ -1,8 +1,4 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        
-    });
-</script>
+
 <div class="users form">
 <?php echo $this->Form->create('User');?>
 	<fieldset>
@@ -15,7 +11,7 @@
 	?>
 	</fieldset>
 	<div class='submit'>
-		<input type='submit' value='Save Changes' />
+		<input type='submit' value='Save Changes' class='btn'/>
         <?php echo $this->Html->link('Cancel', array(
             'action' => 'index'
         )) ?>

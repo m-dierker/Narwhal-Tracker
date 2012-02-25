@@ -1,8 +1,5 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#nav_donor").addClass("selected");
-    });
-</script>
+<?php $this->Html->scriptBlock("$(document).ready(function() { $('#nav_donor').addClass('active'); });", array('inline' => false)); ?>
+
 <?php if(isset($this->params['url']['origin'])) {?>
     <?php echo $this->Html->link('Go back to rider page', array(
         'controller' => 'riders',
@@ -11,7 +8,7 @@
     )) ?>
 <?php } ?>
 <?php if(!isset($is_rider)) { ?>
-    <ul class="actions">
+    <ul class="nav nav-pills">
         <li>
             <?php echo $this->Html->link('Edit donor information', array(
                 'controller' => 'donors',
@@ -64,7 +61,7 @@
 </table>
 <?php if(!isset($is_rider)) { ?>
 <h2>Donations summary</h2>
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Date Made</th>

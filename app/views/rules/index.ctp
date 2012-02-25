@@ -1,4 +1,4 @@
-<ul class="actions">
+<ul class="nav nav-pills">
 	<li>
         <?php echo $this->Html->link('Add a rule', array(
             'controller' => 'rules',
@@ -7,7 +7,7 @@
     </li>
 </ul>
 <h2>Rules summary</h2>
-<table>
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Name</th>

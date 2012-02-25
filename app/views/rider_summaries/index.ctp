@@ -1,6 +1,9 @@
 <?php echo $this->Html->css("tablesorter-theme/style.css"); ?>
-<?php echo $this->Html->script('jquery.tablesorter.min.js'); ?>
-<?php echo $this->Html->script('views/rider_summaries/index.js'); ?>
+<?php echo $this->Html->script(
+        array('views/rider_summaries/index.js', 'jquery.tablesorter.min.js'), 
+        array('inline' => false)
+    ); 
+?>
 <script type="text/javascript" language="javascript">
     var thisUrl = "<?php echo $this->Html->url(array("controller" => "rider_summaries", "action" => "index")); ?>";
     var thisYear = <?php echo $currentYear; ?>;
@@ -8,24 +11,24 @@
     var targetAmt = <?php echo isset($target['Rules']['rule_amt']) ? $target['Rules']['rule_amt'] : 0; ?>;
 </script>
 <style type="text/css">
-    .amt {
+    .table td.amt {
         text-align: right;
     }
 </style>
-<ul class='actions'>
-    <li>
-        <?php echo $this->Html->link('Add a rider', array(
-            'controller' => 'riders',
-            'action' => 'add'
-        )) ?>
-    </li>
-</ul>
-<div id="fundraisingSummary" style="position: absolute; right: 8px; top: 8px; text-align: right;">
-	<div style="float: left; margin: 0 3px;">
+<div class="row">
+    <ul class='nav nav-pills span6'>
+        <li>
+            <?php echo $this->Html->link('Add a rider', array(
+                'controller' => 'riders',
+                'action' => 'add'
+            )) ?>
+        </li>
+    </ul>
+	<div class="span3 offset1">
 		<p style="margin: 5px 0;">Total fundraising for <?php echo $currentYear; ?></p>
 		<h2 style="margin-top: 0;">$<span id="fundraisingTotal"></span></h2>
 	</div>
-	<div style="float: left; margin: 0 3px;">
+	<div class="span2">
 		<p style="margin: 5px 0">Average per rider</p>
 		<h2 style="margin-top: 0;">$<span id="fundraisingAverage">0</span></h2>
 	</div>
@@ -41,7 +44,7 @@
     - <a id='showProgressBars' href='#'>See Progress</a>
 <?php } ?>
 </h2>
-<table id="riderSummary" class="tablesorter">
+<table id="riderSummary" class="tablesorter table table-striped">
 	<thead>
 		<tr>
 			<th class='progress-bar'>First Name</th>
@@ -107,7 +110,11 @@
 				</ul>
 			</td>
             <td style="display:none; width: 61.6%;" class="progress-bar progress-bar-cell">
-                <div class="progressBar"></div>
+            <?php if($rider['RiderSummary']['r_last_name'] != $currentYear) { ?>
+                <div class="progress progress-striped">
+                    <div class="bar"></div>
+                </div>
+            <?php } ?>
             </td>
 		</tr>
 	<?php endforeach; ?>

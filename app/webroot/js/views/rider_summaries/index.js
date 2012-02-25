@@ -1,14 +1,14 @@
 $(document).ready(function() {
-    $("#nav_rider").addClass("selected");
+    $("#nav_rider").addClass("active");
 
     if($("#riderSummary tfoot").length > 0) {
         $("#fundraisingSummary").hide();
     } else {
         var total = 0.0,
             donations = $("input.amt-cents"),
-            general = $("input.amt-cents-general");
+            general = $("input.amt-cents-general"),
+            count = donations.size();
         
-        var count = donations.size();
         donations.each(function() {
            total += parseInt($(this).val()) / 100;
         });
@@ -57,21 +57,31 @@ $(document).ready(function() {
 });
 
 function ProgressBars() {
-    var toggleButton = $("#showProgressBars");
-
-    var table = $("#riderSummary");
-
-    var initialized = false, hidden = true;
+    var toggleButton = $("#showProgressBars"),
+        table = $("#riderSummary"),
+        initialized = false,
+        hidden = true;
 
     function initialize() {
         table.find("tbody tr").each(function() {
-            var row = $(this);
-            var amt = parseInt(row.find("input.amt-cents, input.amt-cents-general").val()) / 100;
+            var row = $(this),
+                amt = parseInt(row.find("input.amt-cents, input.amt-cents-general").val()) / 100;
+            
             if(amt > targetAmt) {
                 amt = targetAmt;
             }
-            var points = (amt / targetAmt) * 100;
-            row.find("div.progressBar").progressbar({ value: points });
+            var points = (amt / targetAmt) * 100,
+                progressBar = row.find("div.progress");
+                
+            progressBar.find("div.bar").css({ width: points + "%" });
+            
+            if(points >= 100) {
+                progressBar.addClass("progress-success");
+            } else if(points > 75) {
+                progressBar.addClass("progress-info");
+            } else {
+                progressBar.addClass("progress-danger");
+            }
         });
         initialized = true;
     }

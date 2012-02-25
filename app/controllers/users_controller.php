@@ -1,6 +1,5 @@
 <?php
 class UsersController extends AppController {
-
 	var $name = 'Users';
     
 	function index() {
@@ -157,6 +156,7 @@ class UsersController extends AppController {
         $this->Acl->allow($group, 'controllers/riders/index');
         $this->Acl->allow($group, 'controllers/riders/edit');
         $this->Acl->allow($group, 'controllers/riders/add');
+        $this->Acl->allow($group, 'controllers/riders/delete');
         $this->Acl->allow($group, 'controllers/RiderSummaries/team');
         $this->Acl->allow($group, 'controllers/users/logout');
         $this->Acl->allow($group, 'controllers/users/login');

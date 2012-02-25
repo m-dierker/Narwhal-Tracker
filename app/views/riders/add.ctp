@@ -1,45 +1,8 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#nav_rider").addClass("selected");
-        
-        var userManager = new UserManagement();
-    });
-    
-    function UserManagement() {
-        var fieldset = $("#user_mgmt");
-        
-        var userSelect = $("#RiderRUserId");
-        
-        function initialize() {
-            $("label[for='RiderRUserId']").addClass('existing_user');
-            
-            fieldset.find('.existing_user').hide();
-            fieldset.find('.new_user').show();
-            
-            var options = userSelect.find('option').first().text("Create a new user")
-            
-            userSelect.change(function() { toggleRiderUserMethod(); });
-        }
-        
-        function toggleRiderUserMethod() {
-            if(userSelect.val() >= 0) {
-                fieldset.find('.existing_user').show();
-                fieldset.find('.new_user').hide();
-            } else {
-                fieldset.find('.existing_user').hide();
-                fieldset.find('.new_user').show();
-            }
-        }
-        
-        function suggestUserName() {
-            var first = $("#RiderRFirstName").val();
-            var last = $("#RiderRLastName").val();
-        }
-        
-        initialize();
-    }
-</script>
-<?php echo $this->Form->create('Rider'); ?>
+<?php 
+    echo $this->Html->scriptBlock("$(document).ready(function() { $('#nav_rider').addClass('active'); })", array('inline' => false));
+    echo $this->Html->script('views/riders/add.js', array('inline' => false));
+    echo $this->Form->create('Rider');
+?>
 	<fieldset>
 		<legend>Add a Rider</legend>
 		<?php 
@@ -51,6 +14,7 @@
 				'options' => $valid_years
 			));
             echo "<fieldset id='user_mgmt'>";
+            echo "<legend>Create a User</legend>";
             echo $this->Form->input('r_user_id', array(
                 'label' => 'Username',
                 'options' => $user_list
@@ -63,7 +27,7 @@
 		?>
 	</fieldset>
 	<div class='submit'>
-		<button type='submit'>Create Rider</button>
+		<button type='submit' class='btn'>Create Rider</button>
 		<?php echo $this->Html->link('Cancel', array('controller' => 'riders', 'action' => 'index')); ?>
 	</div>
 <?php echo $this->Form->end(); ?>

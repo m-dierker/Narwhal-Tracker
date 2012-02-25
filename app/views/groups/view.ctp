@@ -37,7 +37,7 @@
 <div class="related">
 	<h3><?php __('Related Users');?></h3>
 	<?php if (!empty($group['User'])):?>
-	<table cellpadding = "0" cellspacing = "0">
+	<table cellpadding = "0" cellspacing = "0" class="table table-striped">
 	<tr>
 		<th><?php __('Id'); ?></th>
 		<th><?php __('Username'); ?></th>

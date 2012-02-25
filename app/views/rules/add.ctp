@@ -9,7 +9,7 @@
 		?>
 	</fieldset>
 	<div class='submit'>
-		<button type='submit'>Create Rule</button>
+		<button type='submit' class="btn">Create Rule</button>
 		<?php echo $this->Html->link('Cancel', array(
             'controller' => 'rules',
             'action' => 'index'

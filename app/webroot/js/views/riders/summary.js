@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#nav_rider").addClass("selected");
+    $("#nav_rider").addClass("active");
 
     $("div.riderYearSummary").each(function(i, el) {
         var total = 0.0;

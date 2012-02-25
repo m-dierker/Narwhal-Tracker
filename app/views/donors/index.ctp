@@ -1,9 +1,6 @@
-<script type="text/javascript" language="javascript">
-	$(document).ready(function() {
-        $("#nav_donor").addClass("selected");
-    });
-</script>
-<ul class='actions'>
+<?php $this->Html->scriptBlock("$(document).ready(function() { $('#nav_donor').addClass('active'); });", array('inline' => false)); ?>
+
+<ul class='nav nav-pills'>
     <li>
         <?php echo $this->Html->link('Search the donor list', array(
             'controller' => 'donors',
@@ -12,7 +9,8 @@
     </li>
 </ul>
 <h2>Donors</h2>
-<table>
+<!--
+<table class="table table-striped">
 	<thead>
 		<tr>
 			<th>Name</th>
@@ -54,3 +52,4 @@
 	<?php endforeach; ?>
 	</tbody>
 </table>
+-->

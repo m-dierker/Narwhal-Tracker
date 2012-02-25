@@ -3,7 +3,7 @@
 		var $name = 'Donors';
 		
 		function index() {
-			$this->set('donors', $this->Donor->find('all'));
+			//$this->set('donors', $this->Donor->find('all'));
 		}
 		
 		function view($id) {

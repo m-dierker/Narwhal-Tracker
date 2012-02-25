@@ -6,13 +6,39 @@ $(document).ready(function() {
 });
 
 function CleanupDateInputs() {
-	var today = new Date();
-	var validYears = [today.getFullYear(), today.getFullYear()-1];
-	$("#DonationDonDateYear").children().remove();
+	var today = new Date(),
+        validYears = [today.getFullYear(), today.getFullYear()-1],
+        donationDateYear = $("#DonationDonDateYear"),
+        donationDateMonth = $("#DonationDonDateMonth"),
+        donationDateDay = $("#DonationDonDateDay"),
+        datepickerMenu = $("#datepickerMenu"),
+        datepickerToggle = $("#datepickerToggle"),
+        datepicker = $("#datepicker");
+	
+    donationDateYear.children().remove();
+    
 	for(year in validYears) {
-		$("#DonationDonDateYear").append("<option value='" + validYears[year] + "'>" + validYears[year] + "</option>");
+		donationDateYear.append("<option value='" + validYears[year] + "'>" + validYears[year] + "</option>");
 	}
-	//might be nice to pre-populate month and day fields
+    
+    datepicker.datepicker({
+        onSelect: function(date, inst) {
+            var dateParts = date.split("/");
+            donationDateYear.val(dateParts[2]);
+            donationDateMonth.val(dateParts[0]);
+            donationDateDay.val(dateParts[1]);
+            datepickerMenu.removeClass('open');
+        }
+    });
+    
+    datepickerToggle.on('click', function() {
+        if(datepickerMenu.hasClass('open')) {
+            datepickerMenu.removeClass('open');
+        } else {
+            datepickerMenu.addClass('open');
+        }
+        return false;
+    })
 }
 
 function HandleRevenueSourceTypeChange(val) {
@@ -73,7 +99,9 @@ function ValidateDonationForm(context) {
 		validated = false;
 		addValidationError($("#DonationDonRId"), "Please select a rider");
 	}
+    
 	var dollarRegex = new RegExp("^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$");
+    
 	$("#DonationDonAmt").val($("#DonationDonAmt").val().replace("$", ""));
 	if(!dollarRegex.test($("#DonationDonAmt").val())) {
 		validated = false;
@@ -105,6 +133,6 @@ function ValidateDonationForm(context) {
 }
 
 function addValidationError($selector, message) {
-	$selector.after("<div class='error-message'>" + message + "</div>");
+	$selector.after("<div class='error-message label label-important'>" + message + "</div>");
 	return false;
 }
