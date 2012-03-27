@@ -67,49 +67,131 @@
 		}
         
         public function listen_ipn() {
-            /**
-             * Convenient for testing. otherwise, get rid of me!
-             * 
+           
+            /*
+
+            Testing array
+
             $ipn = array(
-                'transaction_subject' => 'Illini 4000 - Helene Werld',
-                'payment_date' => '13:25:10 Feb 04, 2012 PST',
-                'txn_type' => 'web_accept',
-                'last_name' => 'LastName',
-                'residence_country' => 'US',
-                'item_name' => 'Illini 4000 - Helene Werld',
-                'payment_gross' => 102.00,
-                'mc_currency' => 'USD',
-                'business' => 'mercha_1328384327_biz@gmail.com',
-                'payment_type' => 'instant',
-                'protection_eligibility' => 'Ineligible',
-                'verify_sign' => 'AWJGvN1qvAzcgmLnx6oSICoTRKWhAVhGjdQO7WZGhr7Pi2XYRwBkgr4b',
-                'payer_status' => 'verified',
-                'test_ipn' => 1,
-                'tax' => 0.00,
-                'payer_email' => 'buyer_1328389652_per@gmail.com',
-                'txn_id' => '3T371218WX4920823',
-                'quantity'=> 0,
-                'receiver_email' => 'mercha_1328384327_biz@gmail.com',
-                'first_name' => 'Buyer',
-                'payer_id' => '2XMEGVRFWGH6G',
-                'receiver_id' => 'W6ZE5JWLWLGLU',
-                'item_number' => 'Helene Werld',
-                'payment_status' => 'Completed',
-                'payment_fee' => 3.26,
-                'mc_fee' => 3.26,
-                'mc_gross' => 102.00,
-                'custom' => 1,
-                'charset' => 'windows-1252',
-                'notify_version' => 3.4,
-                'ipn_track_id' => 'ea98e76ba63b5',
-                'memo' => 'Helene Werld!'
-            ); 
-            
-             * 
-             * Once you've verified the contents of the posted ipn array call this:
-             * 
-             * $this->save_ipn($ipn);
-             *  */
+                            'transaction_subject' => 'Illini 4000 - Helene Werld',
+                            'payment_date' => '13:25:10 Feb 04, 2012 PST',
+                            'txn_type' => 'web_accept',
+                            'last_name' => 'LastName',
+                            'residence_country' => 'US',
+                            'item_name' => 'Illini 4000 - Helene Werld',
+                            'payment_gross' => 102.00,
+                            'mc_currency' => 'USD',
+                            'business' => 'mercha_1328384327_biz@gmail.com',
+                            'payment_type' => 'instant',
+                            'protection_eligibility' => 'Ineligible',
+                            'verify_sign' => 'AWJGvN1qvAzcgmLnx6oSICoTRKWhAVhGjdQO7WZGhr7Pi2XYRwBkgr4b',
+                            'payer_status' => 'verified',
+                            'test_ipn' => 1,
+                            'tax' => 0.00,
+                            'payer_email' => 'buyer_1328389652_per@gmail.com',
+                            'txn_id' => '3T371218WX4920823',
+                            'quantity'=> 0,
+                            'receiver_email' => 'mercha_1328384327_biz@gmail.com',
+                            'first_name' => 'Buyer',
+                            'payer_id' => '2XMEGVRFWGH6G',
+                            'receiver_id' => 'W6ZE5JWLWLGLU',
+                            'item_number' => 'Helene Werld',
+                            'payment_status' => 'Completed',
+                            'payment_fee' => 3.26,
+                            'mc_fee' => 3.26,
+                            'mc_gross' => 102.00,
+                            'custom' => 1,
+                            'charset' => 'windows-1252',
+                            'notify_version' => 3.4,
+                            'ipn_track_id' => 'ea98e76ba63b5',
+                            'memo' => 'Helene Werld!'
+                        ); 
+            **/
+
+
+
+            $req = 'cmd=_notify-validate';
+
+            foreach ($_POST as $key => $value)
+            {
+                $value = urlencode(stripslashes($value));
+                $req .= "&$key=$value";
+            }
+
+            $header = "";
+
+            // post back to PayPal system to validate
+            $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
+            $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
+            $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
+
+
+
+
+            //IMPORTANT: Read the comment below before production
+
+
+
+
+
+            //IMPORTANT NOTE: remove the word sandbox in production
+            $fp = fsockopen ('ssl://www.sandbox.paypal.com', 443, $errno, $errstr, 30);
+
+            //Assign posted variables to local variables
+            $item_name = $_POST['item_name'];
+            $item_number = $_POST['item_number'];
+            $payment_status = $_POST['payment_status'];
+            $payment_amount = $_POST['mc_gross'];
+            $payment_currency = $_POST['mc_currency'];
+            $txn_id = $_POST['txn_id'];
+            $receiver_email = $_POST['receiver_email'];
+            $payer_email = $_POST['payer_email'];
+
+            if (!$fp)
+            {
+                //HTTP Error
+                $this->log("HTTP Error on IPN Save while trying to contact PayPal.");
+            }
+            else
+            {
+                fputs ($fp, $header . $req);
+
+                while (!feof($fp))
+                {
+                    $res = fgets ($fp, 1024);
+
+                    if (strcmp ($res, "VERIFIED") == 0)
+                    {
+                        //PayPal's checklist
+                        // check the payment_status is Completed -- Done!
+                        // check that txn_id has not been previously processed -- Maybe done?
+                        // check that receiver_email is your Primary PayPal email --Needs to be done on the if statement below
+                        // check that payment_amount/payment_currency are correct -- This shouldn't apply to us
+                        // process payment -- Done!
+
+                        //Need to add all of the checks above
+                        if($payment_status == "Completed")
+                        {
+                            $ipn = array_merge($_POST, array("rider_id" => $_GET['r_id']));
+                            if($this->save_ipn($ipn))
+                            {
+                                $this->log("IPN Transaction ID $txn_id completed successfully", 'debug');
+                            }
+
+
+                        }
+                        else
+                        {
+                            $this->log("Possible IPN Failure - Payment Status $payment_status");
+                        }
+                    }
+                    else if (strcmp ($res, "INVALID") == 0)
+                    {
+                        $this->log("IPN Failure -- Invalid Transaction Detected - Transaction ID $txn_id");
+                    }
+                }
+                fclose ($fp);
+            }
             
             exit;
         }
@@ -146,7 +228,7 @@
             $this->Donation->set('don_date', date_parse($ipn["payment_date"]));
             //only validates iff in x.xx format
             $this->Donation->set('don_amt', number_format($ipn["payment_gross"], 2, '.', ''));
-            $this->Donation->set('don_r_id', $ipn["custom"]);
+            $this->Donation->set('don_r_id', $ipn["rider_id"]);
             
             if(!$this->Donation->save()) {
                 $this->log_ipn_failure($ipn, "Donation save failed");
