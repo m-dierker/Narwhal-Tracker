@@ -10,7 +10,7 @@
         }
         
 		function index() {
-			//$this->set('donations', $this->Donation->find('all'));
+			$this->set('donations', $this->Donation->find('all'));
 		}
 		
 		function view($id) {
@@ -229,6 +229,7 @@
             //only validates iff in x.xx format
             $this->Donation->set('don_amt', number_format($ipn["payment_gross"], 2, '.', ''));
             $this->Donation->set('don_r_id', $ipn["rider_id"]);
+            $this->Donation->set('don_comment', $ipn['memo']);
             
             if(!$this->Donation->save()) {
                 $this->log_ipn_failure($ipn, "Donation save failed");
