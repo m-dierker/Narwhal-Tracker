@@ -125,17 +125,8 @@
             $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
             $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
 
-
-
-
-            //IMPORTANT: Read the comment below before production
-
-
-
-
-
-            //IMPORTANT NOTE: remove the word sandbox in production
-            $fp = fsockopen ('ssl://www.sandbox.paypal.com', 443, $errno, $errstr, 30);
+            // Important! change www.paypal.com to www.sandbox.paypal.com in testing or it WILL fail
+            $fp = fsockopen ('ssl://www.paypal.com', 443, $errno, $errstr, 30);
 
             //Assign posted variables to local variables
             $item_name = $_POST['item_name'];
